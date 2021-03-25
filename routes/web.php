@@ -5,16 +5,29 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\QuestionController;
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect()->route('login');
 });
 
 Auth::routes();
 
+Route::get('/haf', [CustomerController::class, 'form'])->name('assesment.form');
+Route::post('/haf/submit', [CustomerController::class, 'submit'])->name('assesment.submit');
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::resource('/questions', QuestionController::class);
+    Route::post('/questions/table', [QuestionController::class, 'table'])->name('questions.table');
+    Route::post('/questions/published', [QuestionController::class, 'published'])->name('questions.published');
+
+    Route::resource('customers', CustomerController::class);
+    Route::post('customers/table', [CustomerController::class, 'table'])->name('customers.table');
 
     Route::middleware(['can:accounts'])->group(function () {
         Route::resource('users', UsersController::class);

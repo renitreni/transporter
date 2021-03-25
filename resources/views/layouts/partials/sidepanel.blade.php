@@ -20,6 +20,24 @@
                         <span class="nav-link-text">Overview</span>
                     </a><!--//nav-link-->
                 </li><!--//nav-item-->
+                <li class="nav-item">
+                    <a class="nav-link" v-bind:class="{ 'active' : checkActive('questions.index') }"
+                       href="{{ route('questions.index') }}">
+                        <div class="nav-icon pt-1">
+                            <span class="fas fa-question-circle fs-5"></span>
+                        </div>
+                        <span class="nav-link-text">Questions</span>
+                    </a><!--//nav-link-->
+                </li><!--//nav-item-->
+                <li class="nav-item">
+                    <a class="nav-link" v-bind:class="{ 'active' : checkActive('customers.index') }"
+                       href="{{ route('customers.index') }}">
+                        <div class="nav-icon pt-1">
+                            <i class="fab fa-creative-commons-by fs-5"></i>
+                        </div>
+                        <span class="nav-link-text">Customers</span>
+                    </a><!--//nav-link-->
+                </li><!--//nav-item-->
                 @if (auth()->user()->isA('super-admin'))
                 <li class="nav-item has-submenu">
                     <a id="menu-users" class="nav-link submenu-toggle" href="#" data-toggle="collapse" data-target="#submenu-1"
