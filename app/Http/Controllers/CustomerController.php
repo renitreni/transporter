@@ -8,6 +8,7 @@ use App\Models\Results;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Models\TravelHistory;
 
 class CustomerController extends Controller
 {
@@ -19,11 +20,11 @@ class CustomerController extends Controller
     public function table()
     {
         return DataTables::of(Customer::all())->setTransformer(function ($value) {
-
             return [
                 'id'         => $value->id,
                 'name'       => $value->name,
                 'created_at' => Carbon::parse($value->created_at)->format('F j, Y'),
+                'travel_status' => TravelHistory::query()->where('customer_id', $value->id)->get(),
                 'edit_link'  => route('customers.show',['customer' => $value->id]),
             ];
         })->make(true);
@@ -70,5 +71,17 @@ class CustomerController extends Controller
         $results = Results::query()->where('customer_id', $id)->get();
 
         return view('customers-result', compact('details', 'results'));
+    }
+
+    public function setTravelStatus(Request $request)
+    {
+        TravelHistory::create([
+            'customer_id' => $request->id,
+            'user_id' => auth()->id(),
+            'status' => $request->status,
+            'event' => Carbon::now()
+        ]);
+
+        return ['success' => true];
     }
 }

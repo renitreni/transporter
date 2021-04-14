@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('customers', CustomerController::class);
     Route::post('customers/table', [CustomerController::class, 'table'])->name('customers.table');
+    Route::post('customers/travel', [CustomerController::class, 'setTravelStatus'])->name('customers.travel');
 
     Route::middleware(['can:accounts'])->group(function () {
         Route::resource('users', UsersController::class);
