@@ -18,7 +18,7 @@ class CreateTravelHistoriesTable extends Migration
             $table->string('customer_id', 200)->nullable();
             $table->string('user_id', 200)->nullable();
             $table->string('status', 200)->nullable();
-            $table->dateTime('status')->nullable();
+            $table->dateTime('event')->nullable();
             $table->timestamps();
         });
     }
